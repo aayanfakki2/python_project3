@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Itihaas Rank Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9e3fb;--c1:#7b4ef0;--c2:#a98bff;--card:#ffffff;--ink:#2a1f4d;--mute:#7d72a3;--acc:#ff7a2f;--ok:#2fb67a;--bad:#e5484d;--line:#e6defa;--soft:#f3efff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17112e;--card:#251c47;--ink:#f1ecff;--mute:#a99fd0;--line:#3a2f66;--soft:#2f2558}}
+:root[data-theme="dark"]{--bg:#17112e;--card:#251c47;--ink:#f1ecff;--mute:#a99fd0;--line:#3a2f66;--soft:#2f2558}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:flex;justify-content:center}
+#app{width:100%;max-width:430px;min-height:100vh;display:flex;flex-direction:column;position:relative}
+button{font-family:inherit;cursor:pointer;border:0}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.pad{padding:16px 18px 96px;flex:1}
+.hero{background:linear-gradient(150deg,var(--c1),var(--c2));color:#fff;border-radius:0 0 28px 28px;padding:18px 18px 22px}
+.top{display:flex;align-items:center;gap:10px}
+.av{width:44px;height:44px;border-radius:50%;background:#fff3;display:grid;place-items:center;font-size:24px}
+.top b{font-size:17px;font-weight:800}.top small{display:block;opacity:.85;font-weight:600}
+.pill{margin-left:auto;background:var(--acc);color:#fff;border-radius:14px;padding:8px 12px;font-weight:800;font-size:13px}
+.pcard{margin-top:16px;background:#fff2;border-radius:20px;padding:14px;display:flex;gap:14px;align-items:center}
+.badge{width:64px;height:64px;border-radius:18px;background:#fff;display:grid;place-items:center;font-size:34px;flex:none}
+.pcard h3{margin:0;font-size:18px;font-weight:900}.pcard p{margin:2px 0 8px;font-size:12.5px;opacity:.9;font-weight:600}
+.bar{height:9px;background:#ffffff40;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc);border-radius:9px;transition:width .3s}
+h2{font-size:17px;font-weight:900;margin:20px 0 10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mode{background:var(--card);border-radius:22px;padding:16px 12px;text-align:center;color:var(--ink);box-shadow:0 6px 18px #7b4ef01f;border:1.5px solid var(--line)}
+.mode .ic{width:56px;height:56px;margin:0 auto 8px;border-radius:18px;background:var(--soft);display:grid;place-items:center;font-size:28px}
+.mode b{display:block;font-size:15px}.mode span{font-size:12px;color:var(--mute);font-weight:700}
+.go{width:34px;height:34px;border-radius:50%;background:var(--acc);color:#fff;margin:10px auto 0;display:grid;place-items:center;font-weight:900}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--card);display:flex;justify-content:space-around;padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px));border-radius:24px 24px 0 0;box-shadow:0 -8px 24px #7b4ef022}
+.nav button{background:none;color:var(--mute);font-weight:800;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 18px;border-radius:14px}
+.nav button em{font-style:normal;font-size:21px}.nav .on{color:var(--c1);background:var(--soft)}
+.qwrap{background:linear-gradient(160deg,var(--c1),var(--c2));min-height:100vh;color:#fff;padding:16px 18px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column}
+.qtop{display:flex;align-items:center;justify-content:space-between;font-weight:800}
+.qtop button{background:#fff3;color:#fff;border-radius:50%;width:36px;height:36px;font-size:16px}
+.stats{display:flex;gap:8px;margin:14px 0 8px;font-weight:800;font-size:13px}
+.stats span{background:#fff3;border-radius:12px;padding:6px 10px}
+.timer{height:10px;background:#ffffff40;border-radius:10px;overflow:hidden}.timer i{display:block;height:100%;width:100%;background:var(--acc);border-radius:10px}
+.q{background:#ffffff26;border-radius:24px;padding:26px 20px;margin:16px 0;font-size:20px;font-weight:800;line-height:1.35;text-align:center;min-height:130px;display:grid;place-items:center}
+.opt{width:100%;display:flex;align-items:center;gap:12px;background:var(--card);color:var(--ink);border-radius:16px;padding:13px 14px;margin-bottom:10px;font-size:15.5px;font-weight:800;text-align:left;border:2px solid transparent}
+.opt i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:13px;flex:none}
+.opt.ok{border-color:var(--ok);background:#dff7ec;color:#14543a}.opt.bad{border-color:var(--bad);background:#fde4e5;color:#7b1d20}
+.opt.gone{opacity:.25;pointer-events:none;text-decoration:line-through}
+.acts{display:flex;gap:10px;margin-top:auto;padding-top:6px}
+.btn{flex:1;background:var(--acc);color:#fff;border-radius:16px;padding:14px;font-weight:900;font-size:15px}
+.btn.ghost{background:#fff3}.btn:disabled{opacity:.45}
+.fb{text-align:center;font-weight:900;min-height:24px;margin-bottom:8px}
+.center{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center;background:linear-gradient(160deg,var(--c1),var(--c2));color:#fff}
+.rcard{background:var(--card);color:var(--ink);border-radius:28px;padding:56px 20px 22px;width:100%;margin-top:44px;position:relative}
+.rcard .badge{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:84px;height:84px;font-size:46px;border:5px solid var(--c2)}
+.big{font-size:52px;font-weight:900;color:var(--c1);line-height:1}
+input{width:100%;padding:14px;border-radius:14px;border:2px solid var(--line);font:800 16px Nunito,sans-serif;margin:14px 0;background:var(--card);color:var(--ink);text-align:center}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-weight:700}
+th{color:var(--mute);text-align:left;padding:6px 4px;font-size:12px}td{padding:10px 4px;border-top:1px solid var(--line)}
+.panel{background:var(--card);border-radius:20px;padding:12px 14px;border:1.5px solid var(--line);overflow-x:auto}
+.me td{color:var(--c1)}
+.rk{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-weight:800}.rk:first-child{border:0}
+.rk .badge{width:42px;height:42px;font-size:22px;border-radius:12px;background:var(--soft)}.rk small{display:block;color:var(--mute);font-weight:700}
+.link{background:none;color:var(--c1);font-weight:800;text-decoration:underline;padding:8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const Q=[
+["Who founded the Maurya Empire?",["Ashoka","Chandragupta Maurya","Bindusara","Brihadratha"],1],
+["Ashoka embraced Buddhism after which war?",["Battle of Hydaspes","Battle of Kalinga","Battle of Tarain","Battle of Chausa"],1],
+["Who wrote the Arthashastra?",["Kalidasa","Banabhatta","Kautilya (Chanakya)","Vishakhadatta"],2],
+["Which Chinese traveller visited India during the reign of Chandragupta II?",["Hiuen Tsang","Fa-Hien","I-tsing","Marco Polo"],1],
+["Who wrote the Harshacharita, the biography of Harshavardhana?",["Banabhatta","Kalhana","Bilhana","Dandin"],0],
+["Alexander fought King Porus on the banks of which river?",["Indus","Ravi","Jhelum (Hydaspes)","Sutlej"],2],
+["Which Indus Valley site is famous for the “Great Bath”?",["Harappa","Mohenjo-daro","Lothal","Kalibangan"],1],
+["Which is the oldest of the four Vedas?",["Yajurveda","Samaveda","Atharvaveda","Rigveda"],3],
+["Where was Gautama Buddha born?",["Bodh Gaya","Sarnath","Lumbini","Kushinagar"],2],
+["Which Chola king built the Brihadeshwara Temple at Thanjavur?",["Rajendra I","Rajaraja I","Aditya I","Kulottunga I"],1],
+["Who founded the Slave (Mamluk) dynasty of the Delhi Sultanate?",["Iltutmish","Balban","Qutb ud-Din Aibak","Razia Sultan"],2],
+["Nalanda University was destroyed by which invader?",["Mahmud of Ghazni","Muhammad Ghori","Bakhtiyar Khalji","Timur"],2],
+["Vasco da Gama reached Calicut in which year?",["1453","1498","1526","1600"],1],
+["The First Battle of Panipat (1526) was fought between Babur and whom?",["Rana Sanga","Ibrahim Lodi","Hemu","Sher Shah Suri"],1],
+["Who defeated Humayun at the Battle of Chausa in 1539?",["Sher Shah Suri","Rana Pratap","Hemu","Bairam Khan"],0],
+["Which Mughal emperor founded the religious path called Din-i-Ilahi?",["Humayun","Jahangir","Akbar","Aurangzeb"],2],
+["Which Mughal emperor built the Taj Mahal?",["Akbar","Jahangir","Shah Jahan","Aurangzeb"],2],
+["Sher Shah Suri is credited with rebuilding which major highway?",["Silk Road","Grand Trunk Road","Royal Road","Deccan Highway"],1],
+["Who was the founder of the Maratha Empire?",["Shahu","Sambhaji","Shivaji","Baji Rao I"],2],
+["The Third Battle of Panipat (1761) was fought between the Marathas and whom?",["Nadir Shah","Ahmad Shah Abdali","Hyder Ali","The British"],1],
+["Who founded the Sikh Empire in Punjab?",["Guru Gobind Singh","Banda Singh Bahadur","Maharaja Ranjit Singh","Guru Nanak"],2],
+["The Battle of Plassey was fought in which year?",["1757","1764","1799","1857"],0],
+["Who was the last Mughal emperor?",["Muhammad Shah","Shah Alam II","Bahadur Shah Zafar","Akbar II"],2],
+["The Revolt of 1857 began at which place?",["Delhi","Kanpur","Lucknow","Meerut"],3],
+["The “Doctrine of Lapse” was introduced by which Governor-General?",["Lord Wellesley","Lord Dalhousie","Lord Cornwallis","Lord Canning"],1],
+["In which year was the Indian National Congress founded?",["1857","1885","1905","1919"],1],
+["The Partition of Bengal (1905) was carried out by which Viceroy?",["Lord Curzon","Lord Minto","Lord Ripon","Lord Hardinge"],0],
+["The capital of British India shifted from Calcutta to Delhi in which year?",["1905","1911","1919","1931"],1],
+["Gandhi’s first satyagraha in India (1917) was in which place?",["Kheda","Bardoli","Champaran","Ahmedabad"],2],
+["The Jallianwala Bagh massacre took place in which year?",["1915","1919","1922","1930"],1],
+["The Dandi March (Salt Satyagraha) took place in which year?",["1920","1927","1930","1942"],2],
+["The Quit India Movement was launched in which year?",["1930","1940","1942","1946"],2],
+["Which leader is associated with the slogan “Delhi Chalo”?",["Bhagat Singh","Subhas Chandra Bose","Lala Lajpat Rai","Bal Gangadhar Tilak"],1],
+["Who was the last Viceroy of India and first Governor-General of independent India?",["Lord Wavell","Lord Mountbatten","C. Rajagopalachari","Lord Linlithgow"],1],
+["The Constitution of India came into effect on which date?",["15 August 1947","26 November 1949","26 January 1950","2 October 1950"],2]
+];
+const MODES={mixed:["Mixed","All eras",0,35,"🇮🇳"],ancient:["Ancient","Indus to Cholas",0,10,"🏺"],medieval:["Medieval","Sultans to Marathas",10,21,"🏰"],modern:["Modern","Plassey to 1950",21,35,"🚂"]};
+const RANKS=[[0,"Praja","Commoner","🧑‍🌾"],[20,"Sipahi","Soldier","🗡️"],[40,"Sardar","Chieftain","🛡️"],[55,"Mansabdar","Noble","🏇"],[70,"Diwan","Minister","📜"],[85,"Peshwa","Prime Minister","🏛️"],[95,"Chakravarti","Emperor","👑"]];
+const N=10,T=20,BASE=10,SPD=5,STK=3,LIFE=3,MAX=N*(BASE+SPD)+(N-2)*STK,KEY="itihaas:v1";
+const $=s=>document.getElementById(s),A=$("app");
+let D={name:"",board:[]},S={screen:"home",tab:"home"},tm=null;
+try{const r=localStorage.getItem(KEY);if(r)D=Object.assign(D,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rankOf=s=>{const p=Math.max(0,s)/MAX*100;let r=RANKS[0];for(const x of RANKS)if(p>=x[0])r=x;return r};
+const best=()=>D.board.filter(e=>e.name===D.name).reduce((m,e)=>Math.max(m,e.score),0);
+const sorted=()=>[...D.board].sort((a,b)=>b.score-a.score||a.time-b.time);
+
+function render(){
+  clearInterval(tm);
+  if(!D.name)return A.innerHTML=`<div class="center"><div style="font-size:64px">🇮🇳</div><h1 style="margin:6px 0 0;font-size:30px;font-weight:900">Itihaas Rank Quiz</h1><p style="font-weight:700;opacity:.9">Test your Indian history and climb from Praja to Chakravarti.</p><input id="nm" maxlength="15" placeholder="Enter your name" aria-label="Your name"><button class="btn" style="flex:none;width:100%" onclick="setName()">Start playing</button></div>`;
+  if(S.screen==="quiz")return quiz();
+  if(S.screen==="result")return result();
+  home();
+}
+function setName(){const v=$("nm").value.trim();if(!v)return $("nm").focus();D.name=v;save();S={screen:"home",tab:"home"};render()}
+function nav(){return`<div class="nav">${[["home","🏠","Home"],["board","🏆","Leaderboard"],["ranks","👑","Ranks"]].map(t=>`<button class="${S.tab===t[0]?"on":""}" onclick="S.tab='${t[0]}';render()"><em>${t[1]}</em>${t[2]}</button>`).join("")}</div>`}
+function home(){
+  const b=best(),r=rankOf(b),i=RANKS.indexOf(r),nx=RANKS[i+1],pct=nx?Math.min(100,(b/MAX*100-r[0])/(nx[0]-r[0])*100):100;
+  const games=D.board.filter(e=>e.name===D.name).length;
+  let h=`<div class="hero"><div class="top"><div class="av">${r[3]}</div><div><b>${esc(D.name)}</b><small>${games} game${games===1?"":"s"} played</small></div><div class="pill">Best ${b}</div></div>
+  <div class="pcard"><div class="badge">${r[3]}</div><div style="flex:1"><h3>${r[1]}</h3><p>${nx?`${Math.max(0,Math.ceil(MAX*nx[0]/100)-b)} pts to ${nx[1]}`:"Highest rank reached"}</p><div class="bar"><i style="width:${pct}%"></i></div></div></div></div><div class="pad">`;
+  if(S.tab==="home"){
+    h+=`<h2>Choose a quiz</h2><div class="grid">${Object.entries(MODES).map(([k,m])=>`<button class="mode" onclick="start('${k}')"><div class="ic">${m[4]}</div><b>${m[0]}</b><span>${m[1]}</span><div class="go">▶</div></button>`).join("")}</div>
+    <p style="color:var(--mute);font-weight:700;font-size:13px;margin-top:18px">10 questions, 20 seconds each. Faster answers and streaks of 3+ earn bonus points. One 50-50 lifeline per game.</p><button class="link" onclick="D.name='';save();render()">Change player</button>`;
+  }else if(S.tab==="board"){
+    const bd=sorted().slice(0,10);
+    h+=`<h2>Top 10</h2><div class="panel">${bd.length?`<table><tr><th>#</th><th>Player</th><th>Score</th><th>Right</th><th>Rank</th></tr>${bd.map((e,i)=>`<tr class="${e.name===D.name?"me":""}"><td>${i+1}</td><td>${esc(e.name)}</td><td>${e.score}</td><td>${e.correct}/${e.total}</td><td>${esc(e.rank)}</td></tr>`).join("")}</table>`:`<p style="text-align:center;font-weight:700;color:var(--mute)">No games yet. Play a quiz to take the first spot.</p>`}</div>`;
+  }else{
+    h+=`<h2>Rank titles</h2><div class="panel">${RANKS.map(x=>`<div class="rk"><div class="badge">${x[3]}</div><div>${x[1]} <small>${x[2]}, ${Math.round(MAX*x[0]/100)}+ points</small></div></div>`).join("")}</div>
+    <p style="color:var(--mute);font-weight:700;font-size:13px">Max score ${MAX}: ${BASE} per correct answer, up to ${SPD} speed bonus, +${STK} streak bonus from the 3rd correct in a row. 50-50 costs ${LIFE} points.</p>`;
+  }
+  A.innerHTML=h+`</div>`+nav();
+}
+function shuf(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function start(k){
+  const m=MODES[k],pool=Q.slice(m[2],m[3]);
+  S={screen:"quiz",mode:k,qs:shuf(pool).slice(0,N),i:0,score:0,streak:0,correct:0,life:false,tt:0};
+  load()
+}
+function load(){
+  const q=S.qs[S.i],ord=shuf([0,1,2,3]);
+  S.shown=ord.map(i=>q[1][i]);S.cp=ord.indexOf(q[2]);S.gone=[];S.locked=false;S.fb="";S.t0=Date.now();
+  quiz();
+}
+function quiz(){
+  clearInterval(tm);
+  const q=S.qs[S.i];
+  A.innerHTML=`<div class="qwrap"><div class="qtop"><button onclick="S={screen:'home',tab:'home'};render()" aria-label="Quit quiz">✕</button><span>Question ${S.i+1}/${N}</span><span id="tl">${T}s</span></div>
+  <div class="stats"><span>Score ${S.score}</span><span>Streak ${S.streak}${S.streak>=3?" 🔥":""}</span></div>
+  <div class="timer"><i id="tb"></i></div><div class="q">${esc(q[0])}</div>
+  <div class="fb" id="fb">${S.fb}</div>
+  ${S.shown.map((o,i)=>`<button class="opt ${S.gone.includes(i)?"gone":""} ${S.locked&&i===S.cp?"ok":""} ${S.locked&&i===S.pick&&i!==S.cp?"bad":""}" ${S.locked?"disabled":""} onclick="pick(${i})"><i>${"ABCD"[i]}</i>${esc(o)}</button>`).join("")}
+  <div class="acts">${S.locked?`<button class="btn" onclick="next()">${S.i+1===N?"See result":"Next question"}</button>`:`<button class="btn ghost" ${S.life?"disabled":""} onclick="fifty()">50-50 (−${LIFE})</button>`}</div></div>`;
+  if(!S.locked){tick();tm=setInterval(tick,100)}
+}
+function tick(){
+  const left=Math.max(0,T-(Date.now()-S.t0)/1000),tb=$("tb"),tl=$("tl");
+  if(tb)tb.style.width=(left/T*100)+"%";if(tl)tl.textContent=Math.ceil(left)+"s";
+  if(left<=0){clearInterval(tm);S.tt+=T;S.pick=-1;S.streak=0;S.locked=true;S.fb="⏰ Time’s up!";quiz()}
+}
+function pick(i){
+  if(S.locked)return;clearInterval(tm);
+  const el=(Date.now()-S.t0)/1000;S.tt+=el;S.pick=i;S.locked=true;
+  if(i===S.cp){
+    const sp=Math.round(SPD*(1-el/T));S.streak++;const sb=S.streak>=3?STK:0,g=BASE+sp+sb;
+    S.score+=g;S.correct++;S.fb=`✅ Correct! +${BASE} base +${sp} speed${sb?` +${sb} streak 🔥`:""} = +${g}`;
+  }else{S.streak=0;S.fb="❌ Wrong answer"}
+  quiz();
+}
+function fifty(){
+  if(S.life||S.locked)return;S.life=true;S.score-=LIFE;
+  const w=[0,1,2,3].filter(i=>i!==S.cp);S.gone=shuf(w).slice(0,2);S.fb=`50-50 used, −${LIFE} points`;
+  const keep=S.t0;quiz();S.t0=keep;
+}
+function next(){S.i++;S.i>=N?finish():load()}
+function finish(){
+  const sc=Math.max(0,S.score),r=rankOf(sc);
+  const e={name:D.name,score:sc,correct:S.correct,total:N,rank:r[1],time:Math.round(S.tt*10)/10,date:new Date().toISOString().slice(0,16).replace("T"," ")};
+  D.board.push(e);D.board=sorted().slice(0,100);save();
+  S.screen="result";S.res=e;S.pos=sorted().indexOf(e)+1;render();
+}
+function result(){
+  const e=S.res,r=rankOf(e.score);
+  A.innerHTML=`<div class="center"><div style="font-weight:800;opacity:.9">Quiz complete</div><div class="rcard"><div class="badge">${r[3]}</div>
+  <div style="font-weight:800;color:var(--mute)">${esc(D.name)}</div><h2 style="margin:4px 0 2px;font-size:24px">${r[1]} (${r[2]})</h2>
+  <div class="big">${e.score}</div><div style="color:var(--mute);font-weight:700;margin:4px 0 12px">out of ${MAX} points</div>
+  <p style="font-weight:800;margin:0 0 4px">${e.correct}/${e.total} correct, ${e.time}s total</p>
+  <p style="color:var(--mute);font-weight:700;margin:0">Leaderboard position: ${S.pos} of ${D.board.length}</p></div>
+  <div class="acts" style="width:100%;margin-top:20px"><button class="btn" onclick="start('${S.mode}')">Play again</button><button class="btn ghost" onclick="S={screen:'home',tab:'board'};render()">Leaderboard</button></div>
+  <button class="link" style="color:#fff" onclick="S={screen:'home',tab:'home'};render()">Back to home</button></div>`;
+}
+render();
+</script>
+</body>
+</html>
